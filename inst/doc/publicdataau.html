@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting started with publicdataau</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting started with publicdataau</h1>
+
+
+
+<!-- Built from publicdataau.Rmd.orig by knitting it against the live site, so the check never needs the network. -->
+<p>publicdata.au republishes Australian government open data that the
+publishers already release under open licences. It keeps every version
+at a URL that never changes, serves each one in twelve formats, and
+answers queries over the whole table. This package reads all of it from
+R. Every function takes a dataset’s slug, the part of its page’s URL
+after <code>/d/</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(publicdataau)</span></code></pre></div>
+<div id="find-a-dataset" class="section level2">
+<h2>Find a dataset</h2>
+<p><code>pd_datasets()</code> searches what the site serves, and filters
+by publisher, topic and government.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">pd_datasets</span>(<span class="st">&quot;road crashes&quot;</span>)[, <span class="fu">c</span>(<span class="st">&quot;slug&quot;</span>, <span class="st">&quot;title&quot;</span>)]</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 2</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;    slug                                title                                              </span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                               &lt;chr&gt;                                              </span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;  1 act-road-crashes                    Road crashes, ACT                                  </span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;  2 qld-road-casualties                 Road casualties, Queensland                        </span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;  3 qld-road-crash-restraint-helmet-use Seatbelt and helmet use in road crash casualties, …</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;  4 qld-road-crash-locations            Road crash locations, Queensland                   </span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;  5 qld-road-crash-vehicle-types        Vehicle types in road crashes, Queensland          </span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;  6 sa-road-crash-locations             Road crash locations, South Australia              </span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  7 tas-road-crashes                    Road crashes, Tasmania                             </span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;  8 qld-road-crash-factors              Factors in road crashes, Queensland                </span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;  9 nsw-road-crashes                    Road crashes, New South Wales                      </span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 10 vic-road-crashes                    Road crashes, Victoria                             </span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 11 qld-road-crash-driver-demographics  Driver demographics in road crashes, Queensland    </span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 12 au-road-deaths                      Australian Road Deaths Database, fatalities</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="fu">pd_datasets</span>(<span class="at">topic =</span> <span class="st">&quot;roads&quot;</span>, <span class="at">jurisdiction =</span> <span class="st">&quot;Qld&quot;</span>)<span class="sc">$</span>slug</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; [1] &quot;qld-road-crash-driver-demographics&quot;  &quot;qld-road-crash-factors&quot;             </span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; [3] &quot;qld-road-casualties&quot;                 &quot;qld-road-crash-locations&quot;           </span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; [5] &quot;qld-road-crash-restraint-helmet-use&quot; &quot;qld-road-crash-vehicle-types&quot;</span></span></code></pre></div>
+<p><code>pd_catalogue()</code> searches every dataset on the government
+portals, including the many the site does not serve yet. Each record
+says whether it is served; one that is not can be voted for on its
+page.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">pd_catalogue</span>(<span class="st">&quot;water quality&quot;</span>, <span class="at">jurisdiction =</span> <span class="st">&quot;Queensland&quot;</span>, <span class="at">limit =</span> <span class="dv">3</span>)[, <span class="fu">c</span>(<span class="st">&quot;title&quot;</span>, <span class="st">&quot;publisher&quot;</span>, <span class="st">&quot;status&quot;</span>)]</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   title                                                          publisher          status</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                                          &lt;chr&gt;              &lt;chr&gt; </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 1 Pumicestone Passage Bulcock Beach - Water quality monitoring   Environment, Tour… votab…</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 2 Brisbane River - Colmslie Site - Water Quality Monitoring Buoy Environment, Tour… votab…</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 3 Sentinel Water Quality                                         City of Gold Coast votab…</span></span></code></pre></div>
+</div>
+<div id="see-what-a-dataset-holds" class="section level2">
+<h2>See what a dataset holds</h2>
+<p><code>pd_fields()</code> lists each field with its type, the
+publisher’s description, its range, and its values when it holds few. A
+query names fields and values exactly, so this is the first call to
+make.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">pd_fields</span>(<span class="st">&quot;act-road-crashes&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;type&quot;</span>, <span class="st">&quot;min&quot;</span>, <span class="st">&quot;max&quot;</span>)]</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 4</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;   name            type    min          max         </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 1 crash_id        integer 1            354433      </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 2 crash_date      date    2015-01-01   2026-09-07  </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 3 crash_time      string  &lt;NA&gt;         &lt;NA&gt;        </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 4 suburb_location string  &lt;NA&gt;         &lt;NA&gt;        </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 5 longitude       number  148.7876728  149.39631165</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 6 latitude        number  -35.89116025 -35.14329768</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 7 intersection    boolean &lt;NA&gt;         &lt;NA&gt;        </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 8 midblock        boolean &lt;NA&gt;         &lt;NA&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="fu">pd_fields</span>(<span class="st">&quot;act-road-crashes&quot;</span>)<span class="sc">$</span>values[[<span class="dv">11</span>]]</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Fatal&quot;                &quot;Injury&quot;               &quot;Property damage only&quot;</span></span></code></pre></div>
+</div>
+<div id="query-rows-and-totals" class="section level2">
+<h2>Query rows and totals</h2>
+<p><code>pd_rows()</code> and <code>pd_aggregate()</code> ask the query
+API, so a filter or a total runs over the whole table without a
+download. Each column comes back typed as its field says and labelled
+with its description.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>crashes <span class="ot">&lt;-</span> <span class="fu">pd_rows</span>(<span class="st">&quot;act-road-crashes&quot;</span>, <span class="at">crash_severity =</span> <span class="st">&quot;Fatal&quot;</span>, <span class="at">crash_date =</span> <span class="fu">pd_gte</span>(<span class="st">&quot;2025-01-01&quot;</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                   <span class="at">.select =</span> <span class="fu">c</span>(<span class="st">&quot;crash_id&quot;</span>, <span class="st">&quot;crash_date&quot;</span>, <span class="st">&quot;crash_type&quot;</span>, <span class="st">&quot;sa2_2021_name&quot;</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>crashes</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 4</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;    crash_id crash_date crash_type                        sa2_2021_name   </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;       &lt;int&gt; &lt;date&gt;     &lt;chr&gt;                             &lt;chr&gt;           </span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;  1   340074 2025-10-01 Struck pedestrian (Off Road)      Canberra East   </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;  2   347129 2026-02-16 Struck object (Off Road)          Hume            </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;  3   336058 2025-03-11 Right angle collision             Nicholls        </span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;  4   351537 2025-11-02 Collision with parked vehicle     Mitchell        </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;  5   342444 2025-12-05 Head on collision                 Kaleen          </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;  6   343635 2026-01-09 Right angle collision             Tuggeranong     </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;  7   330178 2025-03-11 Other - vehicle to vehicle        Lyneham         </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;  8   340260 2025-09-27 Struck pedestrian (Off Road)      Lyneham         </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;  9   347489 2025-03-23 Struck object (Off Road)          Watson          </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; 10   343981 2025-12-03 Rear end collision                ACT - South West</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; 11   340806 2025-10-06 Struck object (Off Road)          ACT - South West</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 12   345222 2026-01-24 Struck object (Off Road)          O&#39;Malley        </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; 13   347390 2026-04-04 Other - Single vehicle (Off Road) ACT - South West</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; 14   345211 2026-02-17 Struck pedestrian (On Road)       Lyneham</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="fu">class</span>(crashes<span class="sc">$</span>crash_date)</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Date&quot;</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="fu">pd_aggregate</span>(<span class="st">&quot;act-road-crashes&quot;</span>, <span class="at">group =</span> <span class="st">&quot;crash_severity&quot;</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 2</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt;   crash_severity       count</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                &lt;int&gt;</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; 1 Fatal                  105</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt; 2 Injury                6576</span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt; 3 Property damage only 69976</span></span></code></pre></div>
+<p>Every answer carries the attribution the publisher’s licence
+requires.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">pd_attribution</span>(crashes)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Roads ACT, City and Environment Directorate, ACT Government, ACT Road Crash Data, https://www.data.act.gov.au/d/6jn4-m8rx, accessed 30 September 2026, licensed under CC BY 4.0.&quot;</span></span></code></pre></div>
+</div>
+<div id="whole-tables" class="section level2">
+<h2>Whole tables</h2>
+<p><code>pd_read()</code> downloads a version’s Parquet file and reads
+it with ‘arrow’. <code>columns</code> reads only the fields asked
+for.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>rate <span class="ot">&lt;-</span> <span class="fu">pd_read</span>(<span class="st">&quot;rba-cash-rate&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">tail</span>(rate, <span class="dv">3</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;   date       cash_rate_target_change cash_rate_target es_rate_change es_rate</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;   &lt;date&gt;                       &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 1 2026-03-18                    0.25             4.1            0.25    4   </span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 2 2026-05-06                    0.25             4.35           0.25    4.25</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 3 2026-09-30                    0.25             4.6            0.25    4.5 </span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: overnight_repo_rate_change &lt;dbl&gt;, overnight_repo_rate &lt;dbl&gt;</span></span></code></pre></div>
+<p>A version never changes once published, so a file can be kept and
+reused. Nothing is kept unless you ask, with <code>cache = TRUE</code>
+on a call or <code>options(publicdataau.cache = TRUE)</code> for every
+call; <code>pd_cache_list()</code> shows what is kept and
+<code>pd_cache_clear()</code> deletes it.</p>
+</div>
+<div id="query-a-version-in-place-with-dplyr" class="section level2">
+<h2>Query a version in place with dplyr</h2>
+<p>Every version has a DuckDB file. <code>pd_tbl()</code> attaches it
+over HTTPS and returns a table for ‘dplyr’; verbs become SQL that runs
+against the file, reading only the blocks they touch.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">pd_tbl</span>(<span class="st">&quot;act-road-crashes&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">filter</span>(crash_severity <span class="sc">==</span> <span class="st">&quot;Fatal&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">count</span>(lighting_condition, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 2</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt;   lighting_condition              n</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                       &lt;dbl&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 1 Daylight                       63</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 2 Dark - good street lighting    21</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 3 Dark - no street lights        11</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 4 Dark - poor street lighting     6</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; 5 Semi-darkness                   4</span></span></code></pre></div>
+<p>G-NAF, the national address file, is a database of 37 tables served
+as one DuckDB file. Its licence sets a condition beyond attribution, on
+compiling addresses for mail, and the package states it once per session
+when G-NAF is first read; this vignette turns that notice off with
+<code>options(publicdataau.quiet = TRUE)</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">pd_tables</span>(<span class="st">&quot;gnaf&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;rows&quot;</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 2</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt;   name                        rows</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                      &lt;dbl&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; 1 address_detail          16970406</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 2 address_default_geocode 16970406</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 3 address_site            16970406</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 4 address_site_geocode    20754564</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 5 address_alias             878895</span></span></code></pre></div>
+</div>
+<div id="maps" class="section level2">
+<h2>Maps</h2>
+<p>Rows of a point dataset carry the codes of the ABS areas their point
+falls in. Total by one of them and <code>pd_join_boundaries()</code>
+attaches the boundaries, in GDA2020.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>by_sa2 <span class="ot">&lt;-</span> <span class="fu">pd_aggregate</span>(<span class="st">&quot;act-road-crashes&quot;</span>, <span class="at">group =</span> <span class="st">&quot;sa2_2021_code&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">pd_join_boundaries</span>(by_sa2)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>map</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 100 features and 3 fields</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: 148.9614 ymin: -35.48032 xmax: 149.3993 ymax: -35.1244</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  GDA2020</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; # A tibble: 100 × 4</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;    sa2_2021_code count sa2_2021_name                                              geometry</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;                                            &lt;MULTIPOLYGON [°]&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;  1 101021012         2 Queanbeyan West - Jerrabomberra (((149.1957 -35.36126, 149.1997 -3…</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;  2 801011001       107 Aranda                          (((149.0741 -35.25529, 149.0742 -3…</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;  3 801011002      2712 Belconnen                       (((149.057 -35.23908, 149.0574 -35…</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;  4 801011003      1836 Bruce                           (((149.0738 -35.24299, 149.0734 -3…</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt;  5 801011004       301 Charnwood                       (((149.0285 -35.19852, 149.0284 -3…</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt;  6 801011005       191 Cook                            (((149.0572 -35.25635, 149.058 -35…</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt;  7 801011006       200 Dunlop                          (((149.0077 -35.19727, 149.0082 -3…</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt;  8 801011007       431 Evatt                           (((149.0673 -35.20722, 149.0673 -3…</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt;  9 801011008       671 Florey                          (((149.0409 -35.22017, 149.0411 -3…</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; 10 801011009       338 Flynn (ACT)                     (((149.0495 -35.2059, 149.0492 -35…</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; # ℹ 90 more rows</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="fu">plot</span>(map[<span class="st">&quot;count&quot;</span>], <span class="at">main =</span> <span class="st">&quot;Road crashes by SA2, ACT&quot;</span>, <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">logz =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="float">
+<img src="data:image/png;base64,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" alt="plot of chunk map" />
+<div class="figcaption">plot of chunk map</div>
+</div>
+<p><code>pd_boundary_layers()</code> lists the layers, and
+<code>pd_sf()</code> reads any dataset’s own map layer.</p>
+</div>
+<div id="versions-changes-and-provenance" class="section level2">
+<h2>Versions, changes and provenance</h2>
+<p>Each release is compared with the one before it on the dataset’s
+key.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">pd_changes</span>(<span class="st">&quot;rba-money-market-daily&quot;</span>)[, <span class="fu">c</span>(<span class="st">&quot;from&quot;</span>, <span class="st">&quot;to&quot;</span>, <span class="st">&quot;added&quot;</span>, <span class="st">&quot;removed&quot;</span>, <span class="st">&quot;changed&quot;</span>)]</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt;   from       to         added removed changed</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; 1 2026-09-30 2026-10-01     1       0       1</span></span></code></pre></div>
+<p><code>pd_provenance()</code> gives the record kept with a version:
+the publisher’s file it was read from, its checksum and when it was
+fetched.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">pd_provenance</span>(<span class="st">&quot;act-road-crashes&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; &lt;pd_provenance&gt; act-road-crashes 2026-10-01</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; Source       https://www.data.act.gov.au/api/views/6jn4-m8rx/rows.csv?accessType=DOWNLOAD</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; File         6jn4-m8rx.csv</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; Bytes        14,256,520</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; SHA-256      45dbb9445b51fdbd831d2c89efa8965f5a3071d50ccf04e0e63374a49ed39a00</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; Fetched      2026-09-30T19:25:31+00:00</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; Licence      Creative Commons Attribution 4.0 International (read 2026-09-30T19:25:24+00:00)</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; Rows         76,657</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; Version      https://publicdata.au/d/act-road-crashes/v/2026-10-01/</span></span></code></pre></div>
+</div>
+<div id="reproducible-work" class="section level2">
+<h2>Reproducible work</h2>
+<p>An answer without a version comes from the newest one and changes
+when the publisher releases again. Pass a date from
+<code>pd_versions()</code> for one that never changes.
+<code>pd_url()</code> gives a fixed file address for another tool, such
+as a ‘targets’ pipeline with <code>format = &quot;url&quot;</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">pd_url</span>(<span class="st">&quot;act-road-crashes&quot;</span>, <span class="st">&quot;parquet&quot;</span>, <span class="fu">pd_latest</span>(<span class="st">&quot;act-road-crashes&quot;</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;https://publicdata.au/d/act-road-crashes/v/2026-10-01/data.parquet&quot;</span></span></code></pre></div>
+</div>
+<div id="citing" class="section level2">
+<h2>Citing</h2>
+<p><code>pd_cite()</code> gives a version’s citation, with the
+attribution its licence requires; <code>utils::toBibtex()</code> turns
+it into a BibTeX entry.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">toBibtex</span>(<span class="fu">pd_cite</span>(<span class="st">&quot;rba-cash-rate&quot;</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; @Misc{rba-cash-rate-2026-09-29,</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   title = {Cash rate target changes, Reserve Bank of Australia},</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt;   author = {{Reserve Bank of Australia}},</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt;   year = {2026},</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt;   howpublished = {Version 2026-09-29, serialised and versioned by National Digital at publicdata.au},</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt;   url = {https://publicdata.au/d/rba-cash-rate/v/2026-09-29/},</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt;   note = {Source: Reserve Bank of Australia, statistical table A2 Changes in Monetary Policy and Administered Rates, sourced 30 September 2026 from https://www.rba.gov.au/statistics/tables/, republished under sections 4 and 5 of the RBA copyright notice, https://www.rba.gov.au/copyright/. The RBA does not endorse this site or any use of this data. The RBA publishes this data free of charge at rba.gov.au},</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
